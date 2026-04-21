@@ -1,10 +1,6 @@
 # Ensure CPU-only PyTorch (avoids CUDA downloads)
---extra-index-url https://download.pytorch.org/whl/cpu
 
 # Core ML / embeddings
-torch==2.2.2+cpu
-sentence-transformers==2.7.0
-transformers==4.41.2
 
 # LangChain ecosystem (pinned for compatibility)
 langchain==0.2.3
