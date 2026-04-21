@@ -10,14 +10,17 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies first (cache layer)
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install --no-cache-dir -r requirements.txt
 
-# Then copy rest
+# Copy rest of code (won’t break cache above)
 COPY . .
 
-# Optional: keep editable install if needed
+# Optional (remove if not needed)
 RUN pip install --no-cache-dir -e .
 
 EXPOSE 8501
