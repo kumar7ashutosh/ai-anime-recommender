@@ -8,6 +8,7 @@ langchain-community
 langchain_groq
 langchain-huggingface
 langchain-classic
+langchain-openai
 # Vector DB
 chromadb
 
