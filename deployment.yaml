@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llmops-app
+  labels:
+    app: llomps-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: llomps-app
+  template:
+    metadata:
+      labels:
+        app: llomps-app
+    spec:
+      containers:
+      - name: llmops-app
+        image: 787308165918.dkr.ecr.us-east-1.amazonaws.com/anime
+        ports:
+        - containerPort: 8501
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+        env:
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: openai-secret
+              key: OPENAI_API_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llmops-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: llomps-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8501
+      targetPort: 8501
